@@ -1,0 +1,65 @@
+<html>
+<head>
+	<title>Brick!</title> 
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body onLoad="init();">
+	<canvas id="canvas" width="960" height="580"></canvas>
+
+	<script src="lib/easel.js"></script>
+	<script>
+	var canvas;
+	var stage;
+	var ball;
+	var init = function (){
+		canvas = document.getElementById("canvas");
+		stage = new createjs.Stage(canvas);
+		
+		ball = new createjs.Shape();
+		ball.graphics.beginFill("#F00");
+ 		ball.graphics.drawCircle((canvas.width/2),500,10);
+ 		
+ 		//this is where you left off. Look into keyboard handling 
+ 		//http://indiegamr.com/retro-style-plattform-runner-game-for-mobile-with-easeljs-part-1/
+ 		ball.onPress = doSomething;
+ 		stage.addChild(ball);
+
+	 	var brick = new Array();
+
+	 	var baseXCord = 200;
+	 	var baseYCord = 100;
+
+	 	for(i=0; i<3; i++){
+	 		var yCord = baseYCord + (25 * i);
+	 		for(j=0; j<10; j++){
+		 		var brickInstance = new createjs.Shape(createBrick());
+		 		brickInstance.x = baseXCord + 70*j;
+		 		brickInstance.y = yCord;
+		 		stage.addChild(brickInstance);
+		 		brick.push(brickInstance);
+	 		}
+	 	}
+		createjs.Ticker.addListener(window);
+		stage.update();
+	};
+
+//this is just a demo function. Will be taken out. 
+	function doSomething(e){
+		console.log("Pressed");
+		e.target.x += 200;
+	};
+
+	var tick = function(){
+		ball.y -= 6;
+		stage.update();
+	}
+
+	var createBrick	= function(){
+ 		var graphics = new createjs.Graphics();
+ 		graphics.beginFill("#000");
+ 		graphics.rect(0,0,60,15);
+ 		return graphics;
+	 };
+	</script>
+</body>
+</html>
